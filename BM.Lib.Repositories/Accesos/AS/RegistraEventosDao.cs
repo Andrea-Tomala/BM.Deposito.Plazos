@@ -23,43 +23,20 @@ namespace BM.Lib.Repositories.Accesos.AS
         public string RegistrarEventos(Evento evento)
         {
             sql = new ConsultasAS();
-            int respuesta;
+            string canal = ConfigurationManager.AppSettings["canalEvent"];
 
 
             try
             {
                 sql.Command.CommandType = CommandType.StoredProcedure;
                 sql.Command.CommandText = "SIAFO06.SCDY023";
-                sql.Command.Parameters.Add("i_Opcionn", iDB2DbType.iDB2Decimal).Value = evento.Opcion;
-                sql.Command.Parameters.Add("i_TipoDocume", iDB2DbType.iDB2Char).Value = evento.TipoIdentificacion;
+                sql.Command.Parameters.Add("i_Opcion", iDB2DbType.iDB2Decimal).Value = evento.Opcion;
+                sql.Command.Parameters.Add("i_TipDocume", iDB2DbType.iDB2Char).Value = evento.TipoIdentificacion;
                 sql.Command.Parameters.Add("i_NumDocume", iDB2DbType.iDB2Decimal).Value = Convert.ToDecimal(evento.Identificacion);
                 sql.Command.Parameters.Add("i_CodCer", iDB2DbType.iDB2Char).Value = evento.CodCertificado;
                 sql.Command.Parameters.Add("i_NumCer", iDB2DbType.iDB2Decimal).Value = evento.NumeroDeposito;
                 sql.Command.Parameters.Add("i_PAmsg", iDB2DbType.iDB2Decimal).Value = evento.CodError;
-                
-                /*
-                sql.Command.Parameters.Add("i_FechaEvento", iDB2DbType.iDB2Date).Value = evento.FechaEvento;
-                sql.Command.Parameters.Add("i_ProcesoEvento", iDB2DbType.iDB2Char).Value = evento.ProcesoEvento;
-                sql.Command.Parameters.Add("i_canal", iDB2DbType.iDB2Char).Value = evento.Canal;
-                sql.Command.Parameters.Add("i_TipoIdentificacion", iDB2DbType.iDB2Char).Value = evento.TipoIdentificacion;
-                sql.Command.Parameters.Add("i_NumeroId", iDB2DbType.iDB2Char).Value = evento.NumeroId;
-                sql.Command.Parameters.Add("i_NombresCliente", iDB2DbType.iDB2Char).Value = evento.NombresCliente;
-                sql.Command.Parameters.Add("i_Oficial", iDB2DbType.iDB2Char).Value = evento.Oficial;
-                sql.Command.Parameters.Add("i_Oficina", iDB2DbType.iDB2Char).Value = evento.Oficina;
-                sql.Command.Parameters.Add("i_FechaEmision", iDB2DbType.iDB2Date).Value = evento.FechaEmision;
-                sql.Command.Parameters.Add("i_FechaVencimiento", iDB2DbType.iDB2Date).Value = evento.FechaVencimiento;
-                sql.Command.Parameters.Add("i_FechaCancelacion", iDB2DbType.iDB2Date).Value = evento.FechaCancelacion;
-                sql.Command.Parameters.Add("i_Plazo", iDB2DbType.iDB2Decimal).Value = evento.Plazo;
-                sql.Command.Parameters.Add("i_Monto", iDB2DbType.iDB2Decimal).Value = evento.Monto;
-                sql.Command.Parameters.Add("i_InteresGanar", iDB2DbType.iDB2Decimal).Value = evento.InteresGanar;
-                sql.Command.Parameters.Add("i_Impuesto", iDB2DbType.iDB2Decimal).Value = evento.Impuesto;
-                sql.Command.Parameters.Add("i_ValorNetoRecibir", iDB2DbType.iDB2Decimal).Value = evento.ValorNetoRecibir;
-                sql.Command.Parameters.Add("i_InteresGanado", iDB2DbType.iDB2Decimal).Value = evento.InteresGanado;
-                sql.Command.Parameters.Add("i_InteresRecibir", iDB2DbType.iDB2Decimal).Value = evento.InteresRecibir;
-                sql.Command.Parameters.Add("i_CuentaCredito", iDB2DbType.iDB2Char).Value = evento.CuentaCredito;
-                sql.Command.Parameters.Add("i_MontoPagadoCta", iDB2DbType.iDB2Decimal).Value = evento.MontoPagadoCta;
-                sql.Command.Parameters.Add("i_MontoRenovado", iDB2DbType.iDB2Decimal).Value = evento.MontoRenovado;
-                sql.Command.Parameters.Add("i_TipoRenovacion", iDB2DbType.iDB2Char).Value = evento.TipoRenovacion;*/
+                sql.Command.Parameters.Add("p_Canal", iDB2DbType.iDB2Char).Value = canal;
 
                 //error
                 sql.Command.Parameters.Add("p_Titulo", iDB2DbType.iDB2Char).Value = evento.MensajeValidacion;
@@ -71,7 +48,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
 
-                respuesta = sql.EjecutaQuery();
+                int respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();

@@ -20,7 +20,6 @@ namespace BM.Lib.Repositories.Accesos.AS
         {
             sql = new ConsultasAS();
             Rendimiento result = new Rendimiento();
-            int respuesta;
 
             try
             {
@@ -52,7 +51,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_msgret"].Direction = ParameterDirection.InputOutput;
                 //
 
-                respuesta = sql.EjecutaQuery();
+                int respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_codret"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["p_msgret"].Value).Trim();

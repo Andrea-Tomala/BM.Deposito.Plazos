@@ -17,6 +17,7 @@ using BM.Lib.Domains.AS.Catalogos;
 using System.Text;
 using Microsoft.SqlServer.Server;
 using BM.Lib.Repositories.Interfaces;
+using System.Configuration;
 
 namespace BM.Lib.Repositories.Accesos.AS
 {
@@ -33,7 +34,6 @@ namespace BM.Lib.Repositories.Accesos.AS
             CrearInversionResp result = new CrearInversionResp();
             decimal numDoc, fechaEmi, fechaVenc, montoDebito;
             string cuentaDebito, beneficiario, cuentaCredito, nombresR;
-            int respuesta;
 
             try
             {
@@ -57,9 +57,16 @@ namespace BM.Lib.Repositories.Accesos.AS
                 nombresR = nombresR.Substring(0, 20);
 
                 XDocument xmlBeneficiarios = ListaBeneficiariosXML(req.Beneficiarios);
+
+                XDocument xmlCuentasDeb = ListaCuentasDebitosXML(req.CuentasADebitar);
+
+
                 sql.Command.CommandType = CommandType.StoredProcedure;
                 sql.Command.CommandText = "SIAFO06.SCDY020";
                 sql.Command.Parameters.Add("xmlBeneficiariosIn", iDB2DbType.iDB2Xml).Value = xmlBeneficiarios.ToString();
+
+                sql.Command.Parameters.Add("xmlCuentasDebitoIn", iDB2DbType.iDB2Xml).Value = xmlCuentasDeb.ToString();
+
                 sql.Command.Parameters.Add("i_Titular", iDB2DbType.iDB2Char).Value = nombresR;
                 sql.Command.Parameters.Add("i_TipDocume", iDB2DbType.iDB2Char).Value = req.TipoIdentificacion;
                 sql.Command.Parameters.Add("i_NumDocume", iDB2DbType.iDB2Decimal).Value = numDoc;
@@ -129,7 +136,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
                 Log.Info("Antes de ejeuctar sp");
-                respuesta = sql.EjecutaQuery();
+                int respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();
@@ -177,7 +184,6 @@ namespace BM.Lib.Repositories.Accesos.AS
             ConsultaSQL sql = new ConsultaSQL();
             int codError = 0;
             string msgError;
-            int idEjecuta;
 
             XDocument xmlDatosDeposito = DatosDepositoXML(crearInversion);
             XDocument xmlBeneficiarios = ListaBeneficiariosXML(crearInversion.Beneficiarios);
@@ -211,7 +217,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 var mensajeError = new SqlParameter("@Pso_MensajeError", SqlDbType.NVarChar, 150) { Direction = ParameterDirection.Output };
                 sql.Command.Parameters.Add(mensajeError);
 
-                idEjecuta = sql.EjecutaQuery();
+                int idEjecuta = sql.EjecutaQuery();
 
                 //Parametros de Salida
                 codError = Convert.ToInt32(sql.Command.Parameters["@Pio_CodigoError"].Value);
@@ -265,6 +271,34 @@ namespace BM.Lib.Repositories.Accesos.AS
                 XE_Beneficiarios.Add(cedula);
                 XE_Beneficiarios.Add(nombres);
                 xRoot.Add(XE_Beneficiarios);
+            });
+            return xDoc;
+        }
+
+        private XDocument ListaCuentasDebitosXML(List<CuentasDebito> listaCuentas)
+        {
+            string formaPago = ConfigurationManager.AppSettings["formaPagoDeb"];
+            string smonto = "";
+            XNamespace xns = "";
+            XDeclaration xDeclaration = new XDeclaration("1.0", "utf-8", "yes");
+            XDocument xDoc = new XDocument(xDeclaration);
+            XElement xRoot = new XElement(xns + "xmlCuentasDebitoIn");
+            xDoc.Add(xRoot);
+
+            listaCuentas.ForEach(x =>
+            {
+                smonto = DosDecimales(x.Monto.ToString());
+
+                XElement XE_CuentasDebito = new XElement(xns + "CuentasDebitoIn");
+                XElement formaDeb = new XElement(xns + "formaDebito", formaPago);
+                XElement prefijo = new XElement(xns + "prefijoDebito", x.Prefijo);
+                XElement cuenta = new XElement(xns + "cuentaDebito", x.Cuenta);
+                XElement montoDebito = new XElement(xns + "valorDebito", smonto);
+                XE_CuentasDebito.Add(formaDeb);
+                XE_CuentasDebito.Add(prefijo);
+                XE_CuentasDebito.Add(cuenta);
+                XE_CuentasDebito.Add(montoDebito);
+                xRoot.Add(XE_CuentasDebito);
             });
             return xDoc;
         }
@@ -605,7 +639,6 @@ namespace BM.Lib.Repositories.Accesos.AS
             string msgError;
             sql = new ConsultasAS();
             decimal numDoc, fechaEmi, fechaVenc;
-            int respuesta;
 
             try
             {
@@ -637,7 +670,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
 
-                respuesta = sql.EjecutaQuery();
+                int respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();

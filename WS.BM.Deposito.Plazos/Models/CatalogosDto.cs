@@ -50,7 +50,6 @@ namespace BM_DepositoPlazo.Models
             datosAuditoria = new DatosAuditoria();
             auditoriaDao = new AuditoriaDao();
             catalogosDao = new CatalogosDao();
-            int id;
 
             try
             {
@@ -65,7 +64,7 @@ namespace BM_DepositoPlazo.Models
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
 
                     Log.Info("Guardar Auditoria: " + jsonString);
-                    id = auditoriaDao.IngresaLogRequest(datosAuditoria);
+                    int id = auditoriaDao.IngresaLogRequest(datosAuditoria);
 
                     //Ejecutar Get Frecuencia Pago Int
                     Log.Info("Ejecutar Get Frecuencia Pago Int SP.");
@@ -101,7 +100,6 @@ namespace BM_DepositoPlazo.Models
             List<Parametros> ListaParametros = new List<Parametros>();
 
             string descripcion = "";
-            int id;
 
             try
             {
@@ -116,7 +114,7 @@ namespace BM_DepositoPlazo.Models
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
 
                     Log.Info("Guardar Auditoria: " + jsonString);
-                    id = auditoriaDao.IngresaLogRequest(datosAuditoria);
+                    int id = auditoriaDao.IngresaLogRequest(datosAuditoria);
 
                     //Ejecutar Get Tipo Renovacion Inv
                     Log.Info("Ejecutar Get Tipo Renovacion Inv SP.");

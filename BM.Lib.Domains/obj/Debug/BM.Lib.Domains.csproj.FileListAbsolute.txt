@@ -48,3 +48,12 @@ A:\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.csp
 A:\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.csproj.CopyComplete
 A:\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.dll
 A:\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.pdb
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\bin\Debug\BM.Lib.Domains.dll
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\bin\Debug\BM.Lib.Domains.pdb
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\bin\Debug\log4net.dll
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\bin\Debug\log4net.xml
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.csproj.AssemblyReference.cache
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.csproj.CoreCompileInputs.cache
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.csproj.CopyComplete
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.dll
+C:\Users\johanna.guano\source\BM_INVERSIONES\BM.Deposito.Plazos\BM.Lib.Domains\obj\Debug\BM.Lib.Domains.pdb
