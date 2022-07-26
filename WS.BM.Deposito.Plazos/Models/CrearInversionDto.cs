@@ -31,6 +31,8 @@ namespace BM_DepositoPlazo.Models
             datosAuditoria = new DatosAuditoria();
             crearInversionDao = new CrearInversionDao();
             auditoriaDao = new AuditoriaDao();
+            int id;
+            int crea;
 
             try
             {
@@ -45,7 +47,7 @@ namespace BM_DepositoPlazo.Models
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
                     Log.Info("Guardar Auditoria");
 
-                    int id = auditoriaDao.IngresaLogRequest(datosAuditoria);
+                    id = auditoriaDao.IngresaLogRequest(datosAuditoria);
 
                     //Ejecutar Crear Inversion aS400
                     Log.Info("Ejecutar Crear Inversion SP.");
@@ -60,7 +62,7 @@ namespace BM_DepositoPlazo.Models
 
                     //crear inversión en sql aplicativa Graba Contrato Info
                     Log.Info("Ejecutar Crear Inversion SP BD Aplicativa");
-                    int crea = crearInversionDao.GrabaContratoDeposito(crearI, crearInversion);
+                    crea = crearInversionDao.GrabaContratoDeposito(crearI, crearInversion);
 
                 }
                 else
@@ -88,6 +90,7 @@ namespace BM_DepositoPlazo.Models
             datosAuditoria = new DatosAuditoria();
             crearInversionDao = new CrearInversionDao();
             auditoriaDao = new AuditoriaDao();
+            int id;
 
             try
             {
@@ -102,7 +105,7 @@ namespace BM_DepositoPlazo.Models
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
                     Log.Info("Guardar Auditoria: " + jsonString);
 
-                    int id = auditoriaDao.IngresaLogRequest(datosAuditoria);
+                    id = auditoriaDao.IngresaLogRequest(datosAuditoria);
 
                     Log.Info("Ejecutar ConsultarInversiones SP.");
                     listaInversionesResp = crearInversionDao.ConsultarInversiones(consultarInversionesReq);
@@ -129,6 +132,7 @@ namespace BM_DepositoPlazo.Models
             datosAuditoria = new DatosAuditoria();
             crearInversionDao = new CrearInversionDao();
             auditoriaDao = new AuditoriaDao();
+            int id;
 
             try
             {
@@ -143,7 +147,7 @@ namespace BM_DepositoPlazo.Models
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
                     Log.Info("Guardar Auditoria.");
                     
-                    int id = auditoriaDao.IngresaLogRequest(datosAuditoria);
+                    id = auditoriaDao.IngresaLogRequest(datosAuditoria);
 
                     Log.Info("Ejecutar ActualizarInversion SP.");
                     repuesta = crearInversionDao.ActualizarInversion(actualizarInversionReq);

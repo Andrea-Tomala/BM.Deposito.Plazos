@@ -16,9 +16,9 @@ namespace BM.Lib.Repositories.Conexion
                 sql = ConfigurationManager.ConnectionStrings["conexionSQL"].ConnectionString;
                 return new SqlConnection(sql);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -29,9 +29,9 @@ namespace BM.Lib.Repositories.Conexion
                 sql = ConfigurationManager.ConnectionStrings["conexionAS"].ConnectionString;
                 return new iDB2Connection(sql);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
     }

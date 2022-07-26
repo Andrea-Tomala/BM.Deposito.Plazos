@@ -34,6 +34,7 @@ namespace BM.Lib.Repositories.Accesos.AS
             CrearInversionResp result = new CrearInversionResp();
             decimal numDoc, fechaEmi, fechaVenc, montoDebito;
             string cuentaDebito, beneficiario, cuentaCredito, nombresR;
+            int respuesta;
 
             try
             {
@@ -136,7 +137,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
                 Log.Info("Antes de ejeuctar sp");
-                int respuesta = sql.EjecutaQuery();
+                respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();
@@ -184,6 +185,7 @@ namespace BM.Lib.Repositories.Accesos.AS
             ConsultaSQL sql = new ConsultaSQL();
             int codError = 0;
             string msgError;
+            int idEjecuta;
 
             XDocument xmlDatosDeposito = DatosDepositoXML(crearInversion);
             XDocument xmlBeneficiarios = ListaBeneficiariosXML(crearInversion.Beneficiarios);
@@ -217,7 +219,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 var mensajeError = new SqlParameter("@Pso_MensajeError", SqlDbType.NVarChar, 150) { Direction = ParameterDirection.Output };
                 sql.Command.Parameters.Add(mensajeError);
 
-                int idEjecuta = sql.EjecutaQuery();
+                idEjecuta = sql.EjecutaQuery();
 
                 //Parametros de Salida
                 codError = Convert.ToInt32(sql.Command.Parameters["@Pio_CodigoError"].Value);
@@ -355,10 +357,10 @@ namespace BM.Lib.Repositories.Accesos.AS
             List<CuentasDebito> listCuentasDebito;
             List<Beneficiario> listBeneficiarios;
             List<FrecuenciaPagoInt> listaFrecuenciaPagos = new List<FrecuenciaPagoInt>();
-            List<TipoRenovacionInv> listaTipoRenovacion = new List<TipoRenovacionInv>();
+            //List<TipoRenovacionInv> listaTipoRenovacion = new List<TipoRenovacionInv>();
             catalogosDao = new CatalogosDao();
             FrecuenciaPagoInt frecuenciaPago = new FrecuenciaPagoInt();
-            TipoRenovacionInv tipoRenovacionInv = new TipoRenovacionInv();
+            //TipoRenovacionInv tipoRenovacionInv = new TipoRenovacionInv();
             Parametros parametrosRenova = new Parametros();
             string pagoInteres = "", renova ="", smonto, sintRecibe, sintPagar, stasaEfec, sintMen, sintMensR, simp, smontoDeb, stasa;
             parametrosDao = new ParametrosDao();
@@ -639,6 +641,7 @@ namespace BM.Lib.Repositories.Accesos.AS
             string msgError;
             sql = new ConsultasAS();
             decimal numDoc, fechaEmi, fechaVenc;
+            int respuesta;
 
             try
             {
@@ -670,7 +673,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
 
-                int respuesta = sql.EjecutaQuery();
+                respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();

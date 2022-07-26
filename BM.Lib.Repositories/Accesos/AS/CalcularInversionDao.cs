@@ -180,6 +180,7 @@ namespace BM.Lib.Repositories.Accesos.AS
         {
             sql = new ConsultasAS();
             string horario;
+            int respuesta;
 
             try
             {
@@ -201,8 +202,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["P_CODRET"].Direction = ParameterDirection.Output;
                 sql.Command.Parameters["P_MSGRET"].Direction = ParameterDirection.Output;
                 //
-
-                int respuesta = sql.EjecutaQuery();
+                respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["P_CODRET"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["P_MSGRET"].Value).Trim();

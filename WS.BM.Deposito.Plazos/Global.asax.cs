@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 
@@ -19,7 +20,7 @@ namespace WS.BM.Deposito.Plazos
             
             log4net.Config.XmlConfigurator.Configure();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
+            MvcHandler.DisableMvcResponseHeader = true; // OK
             Log.Info("INICIO DE SERVICIOS WEB DESACOPLADOS INVERSIONES.");
 
         }

@@ -24,7 +24,7 @@ namespace BM.Lib.Repositories.Accesos.AS
         {
             sql = new ConsultasAS();
             string canal = ConfigurationManager.AppSettings["canalEvent"];
-
+            int respuesta;
 
             try
             {
@@ -48,7 +48,7 @@ namespace BM.Lib.Repositories.Accesos.AS
                 sql.Command.Parameters["p_MsgRet"].Direction = ParameterDirection.InputOutput;
                 //
 
-                int respuesta = sql.EjecutaQuery();
+                respuesta = sql.EjecutaQuery();
 
                 int codError = Convert.ToInt32(sql.Command.Parameters["p_CodRet"].Value);
                 string msgError = Convert.ToString(sql.Command.Parameters["p_MsgRet"].Value).Trim();

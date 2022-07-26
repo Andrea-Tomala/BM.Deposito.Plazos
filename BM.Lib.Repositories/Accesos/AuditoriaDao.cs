@@ -19,6 +19,7 @@ namespace BM.Lib.Repositories.Accesos
             
             int codError = 0;
             string msgError;
+            int idEjecuta;
 
             try
             {
@@ -37,7 +38,7 @@ namespace BM.Lib.Repositories.Accesos
                 var mensajeError = new SqlParameter("@pso_mensajeError", SqlDbType.NVarChar, 150) { Direction = ParameterDirection.Output };
                 sql.Command.Parameters.Add(mensajeError);
 
-                int idEjecuta = sql.EjecutaQuery();
+                idEjecuta = sql.EjecutaQuery();
 
                 //Parametros de Salida
                 codError = Convert.ToInt32(sql.Command.Parameters["@pio_codigoError"].Value);
