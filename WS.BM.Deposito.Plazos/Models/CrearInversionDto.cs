@@ -24,14 +24,16 @@ namespace BM_DepositoPlazo.Models
 
         //
         private DatosAuditoria datosAuditoria;
+        private DatosAuditoria datosAuditoriaTerminos;
 
         public CrearInversionResp CrearInversion(CrearInversionReq crearI)
         {
             CrearInversionResp crearInversion;
             datosAuditoria = new DatosAuditoria();
+            datosAuditoriaTerminos = new DatosAuditoria();
             crearInversionDao = new CrearInversionDao();
             auditoriaDao = new AuditoriaDao();
-            int id;
+            int id, aud;
             int crea;
 
             try
@@ -39,12 +41,24 @@ namespace BM_DepositoPlazo.Models
                 if (isOnline)
                 {
                     //Guardar auditoria
+                    datosAuditoriaTerminos.InputData = "Aceptación de Términos y Condiciones";
+                    datosAuditoriaTerminos.Token = crearI.Auditoria.NutOrigen;
+                    datosAuditoriaTerminos.Ip = crearI.Auditoria.PuntoAcceso;
+                    datosAuditoriaTerminos.Clase = "LogEvento";
+                    datosAuditoriaTerminos.Metodo = "AceptaTerminos";
+
+                    //Aceptacion de terminos y condiciones
+                    aud = auditoriaDao.IngresaLogRequest(datosAuditoriaTerminos);
+
+
+                    //Guardar auditoria
                     string jsonString = JsonConvert.SerializeObject(crearI);
                     datosAuditoria.InputData = jsonString;
                     datosAuditoria.Token = crearI.Auditoria.NutOrigen;
                     datosAuditoria.Ip = crearI.Auditoria.PuntoAcceso;
                     datosAuditoria.Clase = "WsInversion";
                     datosAuditoria.Metodo = MethodBase.GetCurrentMethod().Name;
+
                     Log.Info("Guardar Auditoria");
 
                     id = auditoriaDao.IngresaLogRequest(datosAuditoria);

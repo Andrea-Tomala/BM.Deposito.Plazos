@@ -31,5 +31,6 @@ namespace BM.Lib.Domains.AS.Inversion
         //public string ReferenciaOTP { get; set; }
         public string CodigoOTP { get; set; }
         public string CodigoOficinaOficialCredito { get; set; }
+        public bool AceptaTerminos { get; set; }
     }
 }
