@@ -186,7 +186,7 @@ namespace BM_DepositoPlazo.Controllers
                 if (!string.IsNullOrEmpty(ValidaParametros))
                     return BadRequest(ValidaParametros);
 
-                if (crearInversionReq.AceptaTerminos)
+                if (!crearInversionReq.AceptaTerminos)
                     return BadRequest("Debe Aceptar Terminos y Condiciones");
                 if (string.IsNullOrEmpty(crearInversionReq.Identificacion))
                     return BadRequest("Debe Ingresar Identificacion");
