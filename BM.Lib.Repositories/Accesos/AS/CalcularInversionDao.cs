@@ -28,6 +28,7 @@ namespace BM.Lib.Repositories.Accesos.AS
 
                 sql.Command.CommandType = CommandType.StoredProcedure;
                 sql.Command.CommandText = "SIAFO06.SCDY017";
+                //sql.Command.Parameters.Add("i_Perpa", iDB2DbType.iDB2Char).Value = req.PagoInt;
                 sql.Command.Parameters.Add("i_Inver", req.IMonto);
                 sql.Command.Parameters.Add("i_Plazo", req.IPlazo);
                 sql.Command.Parameters.Add("i_Tipdo", iDB2DbType.iDB2Char).Value = req.ITipoIdentificacion;

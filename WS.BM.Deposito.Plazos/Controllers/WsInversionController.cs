@@ -127,10 +127,12 @@ namespace BM_DepositoPlazo.Controllers
                 if (string.IsNullOrEmpty(rendimientoReq.IPlazo.ToString()))
                     return BadRequest("Debe ingresar Dias Plazo");
 
-                if (string.IsNullOrEmpty(rendimientoReq.Identificacion.ToString()))
+                if (string.IsNullOrEmpty(rendimientoReq.Identificacion))
                     return BadRequest("Falta la identificación");
-                if (string.IsNullOrEmpty(rendimientoReq.ITipoIdentificacion.ToString()))
-                    return BadRequest("Falta la identificación");
+                if (string.IsNullOrEmpty(rendimientoReq.ITipoIdentificacion))
+                    return BadRequest("Falta Tipo identificación");
+                if (string.IsNullOrEmpty(rendimientoReq.PagoInt))
+                    return BadRequest("Falta Pago de Interes");
 
                 calcularInvFinal = inversionDto.CalcularInversion(rendimientoReq);
                 Log.Info("Fin Controller CalcularInversion  con exito.");
